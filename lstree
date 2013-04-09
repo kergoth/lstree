@@ -4,5 +4,7 @@
 # tree in a form which is pleasant to edit in a text editor, e.g. for
 # reviewing/auditing a directory tree, file by file.
 
-find "$@" -printf '%p %y\n' | \
+path="$1"
+shift
+find "$path" \( -name .git -o -name .hg -o -name .svn \) -printf '%p %y\n' -prune -o "$@" -printf '%p %y\n' | \                                                                   
     sed 's,/\( .\)$,\1,; s, [^d]$,,; s;[^/]*/;|___;g;s;___|*;    ;g; s,^|,,; s, d$,/,'
